@@ -21262,7 +21262,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Backbone, _, $) {var App = __webpack_require__(19);
-	__webpack_require__(25);
+	__webpack_require__(32);
 
 	var ApplicationRouter = Backbone.Router.extend({
 	    routes: {
@@ -21272,7 +21272,7 @@
 	        this.listener = {};
 	        _.extend(this.listener, Backbone.Events);
 
-	        this.json = __webpack_require__(25);
+	        this.json = __webpack_require__(32);
 
 	        this.app = new App({el: $('#app')});
 	        this.app.render(this.json.pages[0]);
@@ -21286,10 +21286,60 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	MainPageView = __webpack_require__(20);
-	var AppView = MainPageView.extend({
-	    initialize: function() {
+	/* WEBPACK VAR INJECTION */(function(Backbone, _, $) {NavView = __webpack_require__(20);
+	LleftView = __webpack_require__(25);
+	LrightView = __webpack_require__(27);
+	LnewsView = __webpack_require__(29);
 
+	var AppView = Backbone.View.extend({
+	    initialize: function() {
+	        this.listener = {};
+	        _.extend(this.listener, Backbone.Events);
+
+	    },
+	    render: function(json){
+	        this.json = json;
+
+	        // on ajouter le template html
+	        var template = __webpack_require__(31);
+	        var html = template({homepage: this.json});
+	        this.$el.append(html);
+
+	        this.nav = new NavView({el: $('#navigation')})
+	        this.leftView = new LleftView({el: $('#content')})
+	        this.rightView = new LrightView({el: $('#content')})
+	        this.newsView = new LnewsView({el: $('#content')})
+
+	        this.bindListeners();
+	    },
+	    bindListeners:function(){
+	        this.newsView.listener.bind("expanded",  this.bodyOverflowOn, this);
+	        this.newsView.listener.bind("unexpanded",  this.bodyOverflowOff, this);
+	    },
+	    bodyOverflowOn: function(){
+	        $("body").css({'overflow-y' : 'auto', 'position' : 'relative'})
+	    },
+	    bodyOverflowOff: function(){
+	        $("body").css({'overflow-y' : 'scroll', 'position' : 'fixed'})
+	    },
+	    show: function(){
+
+	    },
+	    hide: function(){
+
+	    }
+	});
+	module.exports = AppView;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)))
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Backbone) {var NavView = Backbone.View.extend({
+	    initialize: function() {
+	        this.render();
 	    },
 	    render: function(json){
 	        this.json = json;
@@ -21306,41 +21356,16 @@
 
 	    }
 	});
-	module.exports = AppView;
+	module.exports = NavView;
 
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Backbone, _) {var MainPageView = Backbone.View.extend({
-	   /* events: {
-	        'click a.play': 'onPlay'
-	    },*/
-	    initialize: function() {
-	        this.listener = {};
-	        _.extend(this.listener, Backbone.Events);
-	    },
-	    render: function(){
-
-	    },
-	    show: function(){
-
-	    },
-	    hide: function(){
-
-	    }
-	});
-	module.exports = MainPageView;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var H = __webpack_require__(22);
-	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<header>");t.b("\n" + i);t.b("    <nav>");t.b("\n" + i);t.b("        <a class=\"brand\" href=\"\"><img src=\"public/images/logo.png\" alt=\"BrandLogo\"><h1>Sofia Pro</h1></a>");t.b("\n" + i);t.b("        <a class=\"menubtn\" href=\"#\">");t.b("\n" + i);t.b("            <div class=\"burger\">");t.b("\n" + i);t.b("                <div class=\"line\"></div>");t.b("\n" + i);t.b("                <div class=\"line\"></div>");t.b("\n" + i);t.b("                <div class=\"line\"></div>");t.b("\n" + i);t.b("            </div>");t.b("\n" + i);t.b("        </a>");t.b("\n" + i);t.b("        <ul class=\"menu\">");t.b("\n" + i);t.b("            <li><a href=\"#\">Homepage</a></li>");t.b("\n" + i);t.b("            <li><a href=\"#\">About us</a></li>");t.b("\n" + i);t.b("            <li><a href=\"#\">Contact</a></li>");t.b("\n" + i);t.b("            <li><a href=\"#\">Menu</a></li>");t.b("\n" + i);t.b("        </ul>");t.b("\n" + i);t.b("    </nav>");t.b("\n" + i);t.b("</header>");t.b("\n" + i);t.b("<section class=\"content\">");t.b("\n" + i);t.b("    <div class=\"landing-block\">");t.b("\n" + i);t.b("        <div class=\"landing-image\">");t.b("\n" + i);t.b("            <img src=\"public/images/placeholder.jpg\" alt=\"\">");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("        <div class=\"landing-title\">");t.b("\n" + i);t.b("            <h2>This is Literature.</h2>");t.b("\n" + i);t.b("                <h3>And literature is art</h3>");t.b("\n" + i);t.b("            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>");t.b("\n" + i);t.b("            <p>uwu</p>");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("    </div>");t.b("\n" + i);t.b("    <!-- <div class=\"container\">");t.b("\n" + i);t.b("        <div class=\"row\">");t.b("\n" + i);t.b("            <div class=\"twelve column\">");t.b("\n" + i);t.b("                <h4>");t.b(t.v(t.d("homepage.title",c,p,0)));t.b("</h4>");t.b("\n" + i);t.b("                <p>");t.b("\n" + i);t.b("                    ");t.b(t.v(t.d("homepage.txt",c,p,0)));t.b("\n" + i);t.b("                </p>");t.b("\n" + i);t.b("                <a href=\"");t.b(t.v(t.d("homepage.button-link",c,p,0)));t.b("\" class=\"button\" ");t.b(t.v(t.d("homepage.button-attr",c,p,0)));t.b(">");t.b(t.v(t.d("homepage.button",c,p,0)));t.b("</a>");t.b("\n" + i);t.b("            </div>");t.b("\n" + i);t.b("        </div>");t.b("\n" + i);t.b("    </div> -->");t.b("\n" + i);t.b("</section>");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<header>\n    <nav>\n        <a class=\"brand\" href=\"\"><img src=\"public/images/logo.png\" alt=\"BrandLogo\"><h1>Sofia Pro</h1></a>\n        <a class=\"menubtn\" href=\"#\">\n            <div class=\"burger\">\n                <div class=\"line\"></div>\n                <div class=\"line\"></div>\n                <div class=\"line\"></div>\n            </div>\n        </a>\n        <ul class=\"menu\">\n            <li><a href=\"#\">Homepage</a></li>\n            <li><a href=\"#\">About us</a></li>\n            <li><a href=\"#\">Contact</a></li>\n            <li><a href=\"#\">Menu</a></li>\n        </ul>\n    </nav>\n</header>\n<section class=\"content\">\n    <div class=\"landing-block\">\n        <div class=\"landing-image\">\n            <img src=\"public/images/placeholder.jpg\" alt=\"\">\n        </div>\n        <div class=\"landing-title\">\n            <h2>This is Literature.</h2>\n                <h3>And literature is art</h3>\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\n            <p>uwu</p>\n        </div>\n    </div>\n    <!-- <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"twelve column\">\n                <h4>{{homepage.title}}</h4>\n                <p>\n                    {{homepage.txt}}\n                </p>\n                <a href=\"{{homepage.button-link}}\" class=\"button\" {{homepage.button-attr}}>{{homepage.button}}</a>\n            </div>\n        </div>\n    </div> -->\n</section>\n", H);return T.render.apply(T, arguments); };
+	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<nav>\r");t.b("\n" + i);t.b("    <a class=\"brand\" href=\"#\" title=\"This is a lovely logo\"><img src=\"public/images/logo.png\" alt=\"BrandLogo\">\r");t.b("\n" + i);t.b("        <h1>Sofia Pro</h1></a>\r");t.b("\n" + i);t.b("    <a class=\"menubtn\" href=\"#\">\r");t.b("\n" + i);t.b("        <div class=\"burger\">\r");t.b("\n" + i);t.b("            <div class=\"line\"></div>\r");t.b("\n" + i);t.b("            <div class=\"line\"></div>\r");t.b("\n" + i);t.b("            <div class=\"line\"></div>\r");t.b("\n" + i);t.b("        </div>\r");t.b("\n" + i);t.b("    </a>\r");t.b("\n" + i);t.b("    <ul class=\"menu\">\r");t.b("\n" + i);t.b("        <li><a href=\"#\" title=\"This is not a real link\">Homepage</a></li>\r");t.b("\n" + i);t.b("        <li><a href=\"#\" title=\"This one is not either\">About us</a></li>\r");t.b("\n" + i);t.b("        <li><a href=\"#\" title=\"I think you get it now\">Contact</a></li>\r");t.b("\n" + i);t.b("        <li><a href=\"#\" title=\"Come on dude\">Menu</a></li>\r");t.b("\n" + i);t.b("    </ul>\r");t.b("\n" + i);t.b("</nav>\r");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<nav>\r\n    <a class=\"brand\" href=\"#\" title=\"This is a lovely logo\"><img src=\"public/images/logo.png\" alt=\"BrandLogo\">\r\n        <h1>Sofia Pro</h1></a>\r\n    <a class=\"menubtn\" href=\"#\">\r\n        <div class=\"burger\">\r\n            <div class=\"line\"></div>\r\n            <div class=\"line\"></div>\r\n            <div class=\"line\"></div>\r\n        </div>\r\n    </a>\r\n    <ul class=\"menu\">\r\n        <li><a href=\"#\" title=\"This is not a real link\">Homepage</a></li>\r\n        <li><a href=\"#\" title=\"This one is not either\">About us</a></li>\r\n        <li><a href=\"#\" title=\"I think you get it now\">Contact</a></li>\r\n        <li><a href=\"#\" title=\"Come on dude\">Menu</a></li>\r\n    </ul>\r\n</nav>\r\n", H);return T.render.apply(T, arguments); };
 
 /***/ },
 /* 22 */
@@ -22147,6 +22172,161 @@
 
 /***/ },
 /* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Backbone) {var LeftView = Backbone.View.extend({
+	    initialize: function() {
+	        this.render();
+	    },
+	    render: function(json){
+	        this.json = json;
+
+	        // on ajouter le template html
+	        var template = __webpack_require__(26);
+	        var html = template({homepage: this.json});
+	        this.$el.append(html);
+	    },
+	    show: function(){
+
+	    },
+	    hide: function(){
+
+	    }
+	});
+	module.exports = LeftView;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var H = __webpack_require__(22);
+	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"landing-left\">\r");t.b("\n" + i);t.b("    <div class=\"landing-block\">\r");t.b("\n" + i);t.b("        <div class=\"landing-image\">\r");t.b("\n" + i);t.b("            <img src=\"public/images/cover.jpg\" alt=\"\">\r");t.b("\n" + i);t.b("        </div>\r");t.b("\n" + i);t.b("        <div class=\"landing-title\">\r");t.b("\n" + i);t.b("            <h2>Thanks to Sofia Pro.</h2>\r");t.b("\n" + i);t.b("            <h3 title=\"font-size:27px; color:#222223; line-height:1; letter-spacing:0.05em;\">Typography is art</h3>\r");t.b("\n" + i);t.b("            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r");t.b("\n" + i);t.b("        </div>\r");t.b("\n" + i);t.b("    </div>\r");t.b("\n" + i);t.b("</div>\r");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<div class=\"landing-left\">\r\n    <div class=\"landing-block\">\r\n        <div class=\"landing-image\">\r\n            <img src=\"public/images/cover.jpg\" alt=\"\">\r\n        </div>\r\n        <div class=\"landing-title\">\r\n            <h2>Thanks to Sofia Pro.</h2>\r\n            <h3 title=\"font-size:27px; color:#222223; line-height:1; letter-spacing:0.05em;\">Typography is art</h3>\r\n            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n        </div>\r\n    </div>\r\n</div>\r\n", H);return T.render.apply(T, arguments); };
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Backbone) {var RightView = Backbone.View.extend({
+	    initialize: function() {
+	        this.render();
+	    },
+	    render: function(json){
+	        this.json = json;
+
+	        // on ajouter le template html
+	        var template = __webpack_require__(28);
+	        var html = template({homepage: this.json});
+	        this.$el.append(html);
+	    },
+	    show: function(){
+
+	    },
+	    hide: function(){
+
+	    }
+	});
+	module.exports = RightView;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var H = __webpack_require__(22);
+	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"landing-right\">\r");t.b("\n" + i);t.b("    <div class=\"landing-text\">\r");t.b("\n" + i);t.b("        <p class=\"up\">Book</p>\r");t.b("\n" + i);t.b("        <h3>We're thinking too much</h3>\r");t.b("\n" + i);t.b("        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>\r");t.b("\n" + i);t.b("        <a href=\"#\">Read it here</a>\r");t.b("\n" + i);t.b("    </div>\r");t.b("\n" + i);t.b("</div>\r");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<div class=\"landing-right\">\r\n    <div class=\"landing-text\">\r\n        <p class=\"up\">Book</p>\r\n        <h3>We're thinking too much</h3>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>\r\n        <a href=\"#\">Read it here</a>\r\n    </div>\r\n</div>\r\n", H);return T.render.apply(T, arguments); };
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Backbone, _) {var NewsView = Backbone.View.extend({
+	   events: {
+	        'click': 'expand'
+	    },
+	    initialize: function() {
+	        this.listener = {};
+	        _.extend(this.listener, Backbone.Events);
+
+	        this.render();
+	        this.isExpanded = false;
+	        this.selector = this.$el.find('.landing-news');
+	        this.wrapper = this.selector.find('.wrapper');
+	        this.background = this.selector.find('.background-text');
+	        this.title = this.selector.find('.background-text h2');
+	    },
+	    render: function(json){
+	        this.json = json;
+
+	        // on ajouter le template html
+	        var template = __webpack_require__(30);
+	        var html = template({homepage: this.json});
+	        this.$el.append(html);
+	    },
+	    show: function(){
+
+	    },
+	    hide: function(){
+
+	    },
+	    expand: function(){
+	        if (this.isExpanded === false) {
+	            this.expandAnimation();
+	        } else if (this.isExpanded === true) {
+	            this.unexpandAnimation();
+	        }
+	    },
+	    expandAnimation: function(){
+	        this.undelegateEvents()
+	        this.selector.removeClass('animate');
+	        TweenLite.to(this.wrapper, 1, {top: '0', ease: Expo.easeInOut});
+	        TweenLite.to(this.selector, 1, {top: '0', ease: Expo.easeInOut, onComplete: this.toggleState, onCompleteScope: this});
+	        TweenLite.to(this.title, 1, {opacity: '0', ease: Expo.easeInOut});
+	    },
+	    unexpandAnimation: function(){
+	        this.undelegateEvents()
+	        this.background.removeClass('fixed');
+	        TweenLite.to(this.wrapper, 1, {top: '-200px', ease: Expo.easeInOut});
+	        TweenLite.to(this.selector, 1, {top: '100%', ease: Expo.easeInOut, onComplete: this.toggleState, onCompleteScope: this});
+	        TweenLite.to(this.title, 1, {opacity: '1', ease: Expo.easeInOut});
+	    },
+	    toggleState: function(){
+	        if (this.isExpanded === false) {
+	            this.isExpanded = true;
+	            this.background.addClass('fixed');
+	            this.listener.trigger('expanded');
+	        } else if (this.isExpanded === true) {
+	            this.isExpanded = false;
+	            this.selector.addClass('animate');
+	            this.listener.trigger('unexpanded');
+	        } else {
+	            console.log("There was an error when toggling the news");
+	        }
+	        this.delegateEvents()
+	    }
+	});
+	module.exports = NewsView;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var H = __webpack_require__(22);
+	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"landing-news animate\">\r");t.b("\n" + i);t.b("    <div class=\"wrapper\">\r");t.b("\n" + i);t.b("        <div class=\"background-text\">\r");t.b("\n" + i);t.b("            <h2>What's good</h2>\r");t.b("\n" + i);t.b("            <div class=\"background\"></div>\r");t.b("\n" + i);t.b("        </div>\r");t.b("\n" + i);t.b("        <div class=\"news-list\">\r");t.b("\n" + i);t.b("            <div class=\"row floater\">\r");t.b("\n" + i);t.b("                <div class=\"news-col\">\r");t.b("\n" + i);t.b("                    <a href=\"#\">\r");t.b("\n" + i);t.b("                        <div class=\"news-item\">\r");t.b("\n" + i);t.b("                            <div class=\"news-img\">\r");t.b("\n" + i);t.b("                                <div class=\"show\">\r");t.b("\n" + i);t.b("                                    <span>show me</span>\r");t.b("\n" + i);t.b("                                </div>\r");t.b("\n" + i);t.b("                                <img src=\"public/images/cover1.jpg\" alt=\"\">\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                            <div class=\"news-title\">\r");t.b("\n" + i);t.b("                                <h3>Help yourself, you have a lot to learn.</h3>\r");t.b("\n" + i);t.b("                                <p class=\"subtitle\">It's new, it's fresh, it's made just for you</p>\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                        </div>\r");t.b("\n" + i);t.b("                    </a>\r");t.b("\n" + i);t.b("                </div>\r");t.b("\n" + i);t.b("                <div class=\"news-col\">\r");t.b("\n" + i);t.b("                    <a href=\"#\">\r");t.b("\n" + i);t.b("                        <div class=\"news-item\">\r");t.b("\n" + i);t.b("                            <div class=\"news-img\">\r");t.b("\n" + i);t.b("                                <div class=\"show\">\r");t.b("\n" + i);t.b("                                    <span>show me</span>\r");t.b("\n" + i);t.b("                                </div>\r");t.b("\n" + i);t.b("                                <img src=\"public/images/cover2.jpg\" alt=\"\">\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                            <div class=\"news-title\">\r");t.b("\n" + i);t.b("                                <h3>This will make your day.</h3>\r");t.b("\n" + i);t.b("                                <p class=\"subtitle\">A lovely typeface.</p>\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                        </div>\r");t.b("\n" + i);t.b("                    </a>\r");t.b("\n" + i);t.b("                </div>\r");t.b("\n" + i);t.b("                <div class=\"news-col\">\r");t.b("\n" + i);t.b("                    <a href=\"#\">\r");t.b("\n" + i);t.b("                        <div class=\"news-item\">\r");t.b("\n" + i);t.b("                            <div class=\"news-img\">\r");t.b("\n" + i);t.b("                                <div class=\"show\">\r");t.b("\n" + i);t.b("                                    <span>show me</span>\r");t.b("\n" + i);t.b("                                </div>\r");t.b("\n" + i);t.b("                                <img src=\"public/images/cover3.jpg\" alt=\"\">\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                            <div class=\"news-title\">\r");t.b("\n" + i);t.b("                                <h3>We and only we</h3>\r");t.b("\n" + i);t.b("                                <p class=\"subtitle\">A book about a couple.. of things.</p>\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                        </div>\r");t.b("\n" + i);t.b("                    </a>\r");t.b("\n" + i);t.b("                </div>\r");t.b("\n" + i);t.b("                <div class=\"news-col\">\r");t.b("\n" + i);t.b("                    <a href=\"#\">\r");t.b("\n" + i);t.b("                        <div class=\"news-item\">\r");t.b("\n" + i);t.b("                            <div class=\"news-img\">\r");t.b("\n" + i);t.b("                                <div class=\"show\">\r");t.b("\n" + i);t.b("                                    <span>show me</span>\r");t.b("\n" + i);t.b("                                </div>\r");t.b("\n" + i);t.b("                                <img src=\"public/images/cover4.jpeg\" alt=\"\">\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                            <div class=\"news-title\">\r");t.b("\n" + i);t.b("                                <h3>Journey</h3>\r");t.b("\n" + i);t.b("                                <p class=\"subtitle\">Beautiful things really.</p>\r");t.b("\n" + i);t.b("                            </div>\r");t.b("\n" + i);t.b("                        </div>\r");t.b("\n" + i);t.b("                    </a>\r");t.b("\n" + i);t.b("                </div>\r");t.b("\n" + i);t.b("            </div>\r");t.b("\n" + i);t.b("        </div>\r");t.b("\n" + i);t.b("    </div>\r");t.b("\n" + i);t.b("</div>\r");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<div class=\"landing-news animate\">\r\n    <div class=\"wrapper\">\r\n        <div class=\"background-text\">\r\n            <h2>What's good</h2>\r\n            <div class=\"background\"></div>\r\n        </div>\r\n        <div class=\"news-list\">\r\n            <div class=\"row floater\">\r\n                <div class=\"news-col\">\r\n                    <a href=\"#\">\r\n                        <div class=\"news-item\">\r\n                            <div class=\"news-img\">\r\n                                <div class=\"show\">\r\n                                    <span>show me</span>\r\n                                </div>\r\n                                <img src=\"public/images/cover1.jpg\" alt=\"\">\r\n                            </div>\r\n                            <div class=\"news-title\">\r\n                                <h3>Help yourself, you have a lot to learn.</h3>\r\n                                <p class=\"subtitle\">It's new, it's fresh, it's made just for you</p>\r\n                            </div>\r\n                        </div>\r\n                    </a>\r\n                </div>\r\n                <div class=\"news-col\">\r\n                    <a href=\"#\">\r\n                        <div class=\"news-item\">\r\n                            <div class=\"news-img\">\r\n                                <div class=\"show\">\r\n                                    <span>show me</span>\r\n                                </div>\r\n                                <img src=\"public/images/cover2.jpg\" alt=\"\">\r\n                            </div>\r\n                            <div class=\"news-title\">\r\n                                <h3>This will make your day.</h3>\r\n                                <p class=\"subtitle\">A lovely typeface.</p>\r\n                            </div>\r\n                        </div>\r\n                    </a>\r\n                </div>\r\n                <div class=\"news-col\">\r\n                    <a href=\"#\">\r\n                        <div class=\"news-item\">\r\n                            <div class=\"news-img\">\r\n                                <div class=\"show\">\r\n                                    <span>show me</span>\r\n                                </div>\r\n                                <img src=\"public/images/cover3.jpg\" alt=\"\">\r\n                            </div>\r\n                            <div class=\"news-title\">\r\n                                <h3>We and only we</h3>\r\n                                <p class=\"subtitle\">A book about a couple.. of things.</p>\r\n                            </div>\r\n                        </div>\r\n                    </a>\r\n                </div>\r\n                <div class=\"news-col\">\r\n                    <a href=\"#\">\r\n                        <div class=\"news-item\">\r\n                            <div class=\"news-img\">\r\n                                <div class=\"show\">\r\n                                    <span>show me</span>\r\n                                </div>\r\n                                <img src=\"public/images/cover4.jpeg\" alt=\"\">\r\n                            </div>\r\n                            <div class=\"news-title\">\r\n                                <h3>Journey</h3>\r\n                                <p class=\"subtitle\">Beautiful things really.</p>\r\n                            </div>\r\n                        </div>\r\n                    </a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n", H);return T.render.apply(T, arguments); };
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var H = __webpack_require__(22);
+	module.exports = function() { var T = new H.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<header id=\"navigation\"></header>\r");t.b("\n" + i);t.b("<section id=\"content\" class=\"content\"></section>\r");t.b("\n");return t.fl(); },partials: {}, subs: {  }}, "<header id=\"navigation\"></header>\r\n<section id=\"content\" class=\"content\"></section>\r\n", H);return T.render.apply(T, arguments); };
+
+/***/ },
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = {

@@ -5,6 +5,8 @@ LnewsView = require('./app/landing-news/lnews_view');
 
 var AppView = Backbone.View.extend({
     initialize: function() {
+        this.listener = {};
+        _.extend(this.listener, Backbone.Events);
 
     },
     render: function(json){
@@ -19,6 +21,18 @@ var AppView = Backbone.View.extend({
         this.leftView = new LleftView({el: $('#content')})
         this.rightView = new LrightView({el: $('#content')})
         this.newsView = new LnewsView({el: $('#content')})
+
+        this.bindListeners();
+    },
+    bindListeners:function(){
+        this.newsView.listener.bind("expanded",  this.bodyOverflowOn, this);
+        this.newsView.listener.bind("unexpanded",  this.bodyOverflowOff, this);
+    },
+    bodyOverflowOn: function(){
+        $("body").css({'overflow-y' : 'auto', 'position' : 'relative'})
+    },
+    bodyOverflowOff: function(){
+        $("body").css({'overflow-y' : 'scroll', 'position' : 'fixed'})
     },
     show: function(){
 
